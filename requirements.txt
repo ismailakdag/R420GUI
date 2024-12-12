@@ -1,0 +1,5 @@
+tornado==6.4.2
+smokesignal==0.4.0
+twisted
+PyQt5>=5.15.0
+sllurp>=0.5.1
