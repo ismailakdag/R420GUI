@@ -10,6 +10,7 @@ from ..config import RFIDConfig
 from ..reader import RFIDReader
 from .matrix_view import MatrixView
 from .tag_data_view import TagDataView
+from .report_view import ReportView  # Import ReportView
 from typing import Dict, Any, Optional
 import json
 
@@ -65,11 +66,14 @@ class MainWindow(QMainWindow):
         # Create components
         self.create_top_control_panel(main_layout)
         self.create_tab_widget(main_layout)
+        self.create_report_view_tab()  # Create report view tab
 
     def setup_styles(self):
         self.setStyleSheet("""
             QMainWindow {
                 background-color: #f0f0f0;
+                font-family: 'Roboto', sans-serif;
+                font-size: 12pt;
             }
             QPushButton {
                 background-color: #2196F3;
@@ -78,6 +82,8 @@ class MainWindow(QMainWindow):
                 padding: 5px 15px;
                 border-radius: 4px;
                 min-width: 80px;
+                font-family: 'Roboto', sans-serif;
+                font-size: 10pt;
             }
             QPushButton:hover {
                 background-color: #1976D2;
@@ -91,11 +97,15 @@ class MainWindow(QMainWindow):
                 border-radius: 5px;
                 margin-top: 1ex;
                 padding: 10px;
+                font-family: 'Roboto', sans-serif;
+                font-size: 11pt;
             }
             QLineEdit {
                 padding: 5px;
                 border: 1px solid #BDBDBD;
                 border-radius: 4px;
+                font-family: 'Roboto', sans-serif;
+                font-size: 10pt;
             }
         """)
 
@@ -154,6 +164,10 @@ class MainWindow(QMainWindow):
         self.setup_tag_data_tab()
         
         parent_layout.addWidget(self.tab_widget)
+
+    def create_report_view_tab(self):
+        self.report_tab = ReportView(self.tag_data_view.tag_data)  # Pass tag data to report view
+        self.tab_widget.addTab(self.report_tab, 'Reports')  # Add report view as a tab
 
     def setup_config_tab(self):
         layout = QVBoxLayout(self.config_tab)
